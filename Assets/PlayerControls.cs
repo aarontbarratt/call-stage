@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
-    public float movementSpeed = 0.0f;
-    public float baseMovementSpeed = 2.0f; 
-    public float maxMovementSpeed = 7.0f;
-    public float turnSpeed = 10.0f;
+    [SerializeField]
+    private float movementSpeed = 0.0f;
+    float baseMovementSpeed = 2.0f; 
+    float maxMovementSpeed = 6.5f;
 
     // Update is called once per frame
     void Update() {
