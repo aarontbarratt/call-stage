@@ -5,20 +5,30 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour {
     public float movementSpeed = 0.0f;
     public float baseMovementSpeed = 2.0f; 
-    public float maxMovementSpeed = 10.0f;
-
-    // basically __init__()
-    void Start() {
-        // reset the players position to the centre on startup
-        transform.position = new Vector2(0, 0);
-    }
+    public float maxMovementSpeed = 7.0f;
+    public float turnSpeed = 10.0f;
 
     // Update is called once per frame
     void Update() {
+        //rotation
+        // get mouse position
+        Vector3 mousePos = Input.mousePosition;
+        // because we are in 2d the z axis does not matter and we can set to 0
+        mousePos.z = 0;
+
+        // get the position of the mouse within the world
+        Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+        // find the difference between the x and y of the player and the mouse on x and y axis
+        mousePos.x = mousePos.x - objectPos.x;
+        mousePos.y = mousePos.y - objectPos.y;
+
+        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        // movement
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float dist = Vector2.Distance(mousePosition, transform.position);
 
-        // if left mouse button held down
         if (Input.GetMouseButton(0)) {
             movementSpeed = baseMovementSpeed * dist;
             if (movementSpeed > maxMovementSpeed) {
